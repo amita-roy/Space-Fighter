@@ -7,6 +7,7 @@
 
 body {
   display: flex;
+  justify-content: center;
 }
 
 .mt {
@@ -16,7 +17,7 @@ body {
 .left-container {
   width: 500px;
   padding: 20px 40px;
-  background-image: linear-gradient(to right bottom, #011a39, #003b83);
+  background-image: linear-gradient(to right bottom, #011a39, #003b8371);
   margin-right: 30px;
 }
 
