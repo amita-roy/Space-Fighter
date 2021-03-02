@@ -23,9 +23,11 @@ class BaseScene extends Phaser.Scene {
       menuItem.textGO = this.add
         .text(...menuPosition, menuItem.text, {
           fontSize: '32px',
-          fill: '#000',
+          fill: '#fff',
         })
-        .setOrigin(0.5, 1);
+        .setOrigin(0.5, 1)
+        .setShadow(5, 5, '#000', 5);
+
       lastPositionY += 60;
       setupMenuEvent(menuItem);
     });
