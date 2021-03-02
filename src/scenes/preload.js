@@ -3,6 +3,7 @@ import menuMainBG from '../assets/images/menuMainBg.jpg';
 import menuTopBG from '../assets/images/menuBG.png';
 import menuLogo from '../assets/images/menuLogo.png';
 import playerSprite from '../assets/images/player.png';
+import ufoAlienSprite from '../assets/images/ufo.png';
 
 class PreloadScene extends Phaser.Scene {
   constructor(config) {
@@ -16,6 +17,10 @@ class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('playerSprite', playerSprite, {
       frameWidth: 104,
       frameHeight: 149,
+    });
+    this.load.spritesheet('ufoAlienSprite', ufoAlienSprite, {
+      frameWidth: 64,
+      frameHeight: 64,
     });
   }
 
