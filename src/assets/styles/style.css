@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Railway', sans-serif;
+}
+
+body {
+  display: flex;
+}
+
+.mt {
+  margin-top: 15px;
+}
+
+.left-container {
+  width: 500px;
+  padding: 20px 40px;
+  background-image: linear-gradient(to right bottom, #011a39, #003b83);
+  margin-right: 30px;
+}
+
+.playerDetails {
+  margin-top: 50px;
+}
+
+.playerDetails p {
+  font-size: 28px;
+  color: #fff;
+}
+
+.playerDetails p span {
+  margin-left: 10px;
+}
+
+#playerForm label {
+  font-size: 20px;
+  color: #fff;
+}
+
+#playerForm input {
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background-color: rgb(189, 230, 255);
+  outline: none;
+  margin-top: 15px;
+}
+
+#playerForm input:active,
+#playerForm input:focus {
+  outline: none;
+}
