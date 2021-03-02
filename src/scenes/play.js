@@ -14,7 +14,7 @@ class PlayScene extends BaseScene {
       .setOrigin(0.5, 1);
   }
 
-  cursorsFunctionality() {
+  playerMovement() {
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-160);
     } else if (this.cursors.right.isDown) {
@@ -44,7 +44,7 @@ class PlayScene extends BaseScene {
   }
 
   update() {
-    this.cursorsFunctionality();
+    this.playerMovement();
   }
 }
 
