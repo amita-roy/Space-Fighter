@@ -7,6 +7,7 @@ import ufoAlienSprite from '../assets/images/ufo.png';
 import mis1Shoot from '../assets/images/mis1Shoot.png';
 import mis1Explosion from '../assets/images/mis1Explosion.png';
 import starAlien from '../assets/images/starAlien.png';
+import bigAlien from '../assets/images/alienshUpdated.png';
 
 class PreloadScene extends Phaser.Scene {
   constructor(config) {
@@ -36,6 +37,10 @@ class PreloadScene extends Phaser.Scene {
     this.load.spritesheet('starAlien', starAlien, {
       frameWidth: 250.5,
       frameHeight: 274,
+    });
+    this.load.spritesheet('bigAlien', bigAlien, {
+      frameWidth: 255,
+      frameHeight: 255,
     });
   }
 

@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import BigAlien from '../components/bigEnemy';
 import StarAlien from '../components/starAlien';
 import UfoAlien from '../components/ufoAlien';
 import BaseScene from './base';
@@ -16,7 +17,12 @@ class PlayScene extends BaseScene {
   initiateEnemy() {
     const enemy1 = new UfoAlien(this.config);
     const enemy2 = new StarAlien(this.config);
-    this.enemies.push(enemy1.getDetails(), enemy2.getDetails());
+    const mainEnemy = new BigAlien(this.config);
+    this.enemies.push(
+      enemy1.getDetails(),
+      enemy2.getDetails(),
+      mainEnemy.getDetails()
+    );
   }
 
   repeatEnemy() {
