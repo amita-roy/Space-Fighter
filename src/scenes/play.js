@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import UfoAlien from '../components/ufoAlien';
 import BaseScene from './base';
 
 class PlayScene extends BaseScene {
@@ -7,23 +8,45 @@ class PlayScene extends BaseScene {
     this.player = null;
     this.cursors = null;
     this.enemy1 = null;
+    this.enemies = [];
     this.enemyPositionRange = [this.config.width / 10, this.config.width - 100];
   }
 
-  createUfoAlien() {
-    const width = Phaser.Math.Between(...this.enemyPositionRange);
-    this.enemy1 = this.physics.add
-      .sprite(width, 0, 'ufoAlienSprite')
-      .setOrigin(0.5, 0);
-
-    this.enemy1.setVelocityY(100);
+  initiateEnemy() {
+    const enemy1 = new UfoAlien(this.config);
+    this.enemies.push(enemy1.getDetails());
   }
 
-  repeatUfo() {
-    if (this.enemy1.y > this.config.height) {
-      this.createUfoAlien();
-      this.enemy1.play('ufo');
+  repeatEnemy() {
+    if (this.enemy1.y >= this.config.height) {
+      this.createEnemy();
     }
+  }
+
+  createEnemy() {
+    this.enemies.forEach((enemy) => {
+      const width = Phaser.Math.Between(...enemy.positionRange);
+      this.enemy1 = this.physics.add
+        .sprite(width, 0, enemy.sprite)
+        .setOrigin(0.5, 0);
+
+      this.enemy1.setVelocityY(enemy.bodyVelocity);
+    });
+  }
+
+  enemyAnimation() {
+    this.enemies.forEach((enemy) => {
+      this.anims.create({
+        key: enemy.key,
+        frames: this.anims.generateFrameNumbers(enemy.sprite, {
+          start: enemy.frameStart,
+          end: enemy.frameEnd,
+        }),
+        frameRate: enemy.frameRate,
+        repeat: -1,
+      });
+      this.enemy1.play(enemy.key);
+    });
   }
 
   createPlayer() {
@@ -61,7 +84,8 @@ class PlayScene extends BaseScene {
 
   create() {
     this.createPlayer();
-    this.createUfoAlien();
+    this.initiateEnemy();
+    this.createEnemy();
     this.cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
       key: 'fly',
@@ -72,23 +96,14 @@ class PlayScene extends BaseScene {
       frameRate: 2,
       repeat: -1,
     });
-    this.anims.create({
-      key: 'ufo',
-      frames: this.anims.generateFrameNumbers('ufoAlienSprite', {
-        start: 0,
-        end: 14,
-      }),
-      frameRate: 15,
-      repeat: -1,
-    });
 
     this.player.play('fly');
-    this.enemy1.play('ufo');
+    this.enemyAnimation();
   }
 
   update() {
     this.playerMovement();
-    this.repeatUfo();
+    this.repeatEnemy();
   }
 }
 
