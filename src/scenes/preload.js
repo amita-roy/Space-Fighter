@@ -18,10 +18,12 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('menuMainBG', menuMainBG);
     this.load.image('menuTopBG', menuTopBG);
     this.load.image('menuLogo', menuLogo);
+
     this.load.spritesheet('playerSprite', playerSprite, {
       frameWidth: 104,
       frameHeight: 149,
     });
+
     this.load.spritesheet('ufoAlienSprite', ufoAlienSprite, {
       frameWidth: 64,
       frameHeight: 64,

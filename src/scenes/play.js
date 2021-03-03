@@ -1,8 +1,8 @@
-import Phaser from 'phaser';
+// import Phaser from 'phaser';
 import BigAlien from '../components/bigEnemy';
 import Laser from '../components/laser';
-import StarAlien from '../components/starAlien';
-import UfoAlien from '../components/ufoAlien';
+// import StarAlien from '../components/starAlien';
+// import UfoAlien from '../components/ufoAlien';
 import BaseScene from './base';
 
 class PlayScene extends BaseScene {
@@ -12,8 +12,7 @@ class PlayScene extends BaseScene {
     this.cursors = null;
     this.enemyFrequency = this.config.height / 2;
     this.mainEnemy = null;
-    this.enemy = null;
-    this.enemies = [];
+
     this.laser = null;
   }
 
@@ -25,18 +24,30 @@ class PlayScene extends BaseScene {
       .setFlipY(true)
       .setOrigin(0.5, 0);
 
-    this.laser.setVelocityY(-400);
+    this.laser.setVisible(false);
 
     this.anims.create({
-      key: laserDetails.key,
-      frames: this.anims.generateFrameNumbers(laserDetails.sprite, {
-        start: laserDetails.frameStart,
-        end: laserDetails.frameEnd,
+      key: 'laser',
+      frames: this.anims.generateFrameNumbers('mis1Shoot', {
+        start: 0,
+        end: 9,
       }),
-      frameRate: laserDetails.frameRate,
+      frameRate: 10,
       repeat: -1,
     });
-    this.laser.play(laserDetails.key);
+
+    this.laser.play('laser');
+  }
+
+  fire() {
+    this.laser.setVisible(true).setVelocityY(-400);
+  }
+
+  repeatLaser() {
+    if (this.laser.y < 400) {
+      this.createPlayerLaser();
+      this.handleLaserEvent();
+    }
   }
 
   createBigEnemy() {
@@ -46,44 +57,10 @@ class PlayScene extends BaseScene {
       .setOrigin(0.5, 0);
 
     this.mainEnemy.setVelocityY(bigEnem.bodyVelocity);
-  }
-
-  initiateEnemy() {
-    const enemy0 = new UfoAlien(this.config);
-    const enemy2 = new StarAlien(this.config);
-    this.enemies.push(enemy0.getDetails(), enemy2.getDetails());
-  }
-
-  repeatEnemy() {
-    if (this.enemy.y >= this.enemyFrequency) {
-      this.createEnemy();
-    }
-  }
-
-  enemyAnimation(enemy) {
-    this.anims.create({
-      key: enemy.key,
-      frames: this.anims.generateFrameNumbers(enemy.sprite, {
-        start: enemy.frameStart,
-        end: enemy.frameEnd,
-      }),
-      frameRate: enemy.frameRate,
-      repeat: -1,
-    });
-    this.enemy.play(enemy.key);
-  }
-
-  createEnemy() {
-    this.enemies.forEach((enemy) => {
-      const randomNum = Math.random(0, 200);
-      const width = Phaser.Math.Between(...enemy.positionRange);
-      this.enemy = this.physics.add
-        .sprite(width + randomNum, 0, enemy.sprite)
-        .setOrigin(0.5, 0);
-
-      this.enemy.setVelocityY(enemy.bodyVelocity);
-      this.enemyAnimation(enemy);
-    });
+    this.mainEnemy.setBodySize(
+      this.mainEnemy.width - 14,
+      this.mainEnemy.height - 34
+    );
   }
 
   createPlayer() {
@@ -119,16 +96,23 @@ class PlayScene extends BaseScene {
   }
 
   createCollider() {
-    this.physics.add.collider(this.enemy, this.laser, this.restartGame);
+    this.physics.add.collider(
+      this.mainEnemy && this.mainEnemy,
+      this.laser,
+      this.restartGame,
+      null,
+      this
+    );
+  }
+
+  handleLaserEvent() {
+    this.input.keyboard.on('keydown-SPACE', this.fire, this);
   }
 
   create() {
     this.createPlayer();
-    this.initiateEnemy();
-    this.createEnemy();
-    this.createCollider();
+
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.input.keyboard.on('keydown-SPACE', this.createPlayerLaser, this);
     this.anims.create({
       key: 'fly',
       frames: this.anims.generateFrameNumbers('playerSprite', {
@@ -141,20 +125,19 @@ class PlayScene extends BaseScene {
 
     this.player.play('fly');
 
-    this.time.addEvent({
-      delay: 10000,
-      callback: this.createBigEnemy,
-      callbackScope: this,
-      loop: true,
-    });
+    this.createBigEnemy();
+    this.createPlayerLaser();
+
+    this.handleLaserEvent();
+
+    this.createCollider();
   }
 
   update() {
     this.playerMovement();
-    this.repeatEnemy();
-    if (this.mainEnemy) {
-      this.mainEnemy.setX(this.player.x - 10);
-    }
+
+    this.laser.setX(this.player.x);
+    this.repeatLaser();
   }
 }
 
