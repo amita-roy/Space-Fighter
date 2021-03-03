@@ -20,7 +20,7 @@ class PlayScene extends BaseScene {
   }
 
   repeatEnemy() {
-    if (this.enemy1.y >= this.config.height - 300) {
+    if (this.enemy1.y >= this.config.height / 5) {
       this.createEnemy();
     }
   }
