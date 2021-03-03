@@ -35,8 +35,8 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 107,
     });
     this.load.spritesheet('starAlien', starAlien, {
-      frameWidth: 250.5,
-      frameHeight: 274,
+      frameWidth: 150.5,
+      frameHeight: 165,
     });
     this.load.spritesheet('bigAlien', bigAlien, {
       frameWidth: 255,

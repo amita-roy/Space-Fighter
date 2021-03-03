@@ -5,7 +5,7 @@ class UfoAlien {
     this.bodyVelocity = 150;
     this.key = 'ufo';
     this.frameStart = 0;
-    this.frameEnd = 15;
+    this.frameEnd = 14;
     this.frameRate = 15;
   }
 

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import BigAlien from '../components/bigEnemy';
+import Laser from '../components/laser';
 import StarAlien from '../components/starAlien';
 import UfoAlien from '../components/ufoAlien';
 import BaseScene from './base';
@@ -9,24 +10,52 @@ class PlayScene extends BaseScene {
     super('PlayScene', config);
     this.player = null;
     this.cursors = null;
-    this.enemy1 = null;
+    this.enemyFrequency = this.config.height / 2;
+    this.mainEnemy = null;
+    this.enemy = null;
     this.enemies = [];
-    this.enemyPositionRange = [this.config.width / 10, this.config.width - 100];
+    this.laser = null;
+  }
+
+  createPlayerLaser() {
+    const laser = new Laser(this.player.y);
+    const laserDetails = laser.getDetails();
+    this.laser = this.physics.add
+      .sprite(this.player.x, laserDetails.position - 220, laserDetails.sprite)
+      .setFlipY(true)
+      .setOrigin(0.5, 0);
+
+    this.laser.setVelocityY(-400);
+
+    this.anims.create({
+      key: laserDetails.key,
+      frames: this.anims.generateFrameNumbers(laserDetails.sprite, {
+        start: laserDetails.frameStart,
+        end: laserDetails.frameEnd,
+      }),
+      frameRate: laserDetails.frameRate,
+      repeat: -1,
+    });
+    this.laser.play(laserDetails.key);
+  }
+
+  createBigEnemy() {
+    const bigEnem = new BigAlien(this.config);
+    this.mainEnemy = this.physics.add
+      .sprite(this.player.x, 0, bigEnem.sprite)
+      .setOrigin(0.5, 0);
+
+    this.mainEnemy.setVelocityY(bigEnem.bodyVelocity);
   }
 
   initiateEnemy() {
-    const enemy1 = new UfoAlien(this.config);
+    const enemy0 = new UfoAlien(this.config);
     const enemy2 = new StarAlien(this.config);
-    const mainEnemy = new BigAlien(this.config);
-    this.enemies.push(
-      enemy1.getDetails(),
-      enemy2.getDetails(),
-      mainEnemy.getDetails()
-    );
+    this.enemies.push(enemy0.getDetails(), enemy2.getDetails());
   }
 
   repeatEnemy() {
-    if (this.enemy1.y >= this.config.height / 5) {
+    if (this.enemy.y >= this.enemyFrequency) {
       this.createEnemy();
     }
   }
@@ -41,18 +70,18 @@ class PlayScene extends BaseScene {
       frameRate: enemy.frameRate,
       repeat: -1,
     });
-    this.enemy1.play(enemy.key);
+    this.enemy.play(enemy.key);
   }
 
   createEnemy() {
     this.enemies.forEach((enemy) => {
       const randomNum = Math.random(0, 200);
       const width = Phaser.Math.Between(...enemy.positionRange);
-      this.enemy1 = this.physics.add
+      this.enemy = this.physics.add
         .sprite(width + randomNum, 0, enemy.sprite)
         .setOrigin(0.5, 0);
 
-      this.enemy1.setVelocityY(enemy.bodyVelocity);
+      this.enemy.setVelocityY(enemy.bodyVelocity);
       this.enemyAnimation(enemy);
     });
   }
@@ -79,7 +108,6 @@ class PlayScene extends BaseScene {
   }
 
   restartGame() {
-    this.explode();
     this.physics.pause();
     this.time.addEvent({
       delay: 1000,
@@ -90,11 +118,17 @@ class PlayScene extends BaseScene {
     });
   }
 
+  createCollider() {
+    this.physics.add.collider(this.enemy, this.laser, this.restartGame);
+  }
+
   create() {
     this.createPlayer();
     this.initiateEnemy();
     this.createEnemy();
+    this.createCollider();
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.input.keyboard.on('keydown-SPACE', this.createPlayerLaser, this);
     this.anims.create({
       key: 'fly',
       frames: this.anims.generateFrameNumbers('playerSprite', {
@@ -106,11 +140,21 @@ class PlayScene extends BaseScene {
     });
 
     this.player.play('fly');
+
+    this.time.addEvent({
+      delay: 10000,
+      callback: this.createBigEnemy,
+      callbackScope: this,
+      loop: true,
+    });
   }
 
   update() {
     this.playerMovement();
     this.repeatEnemy();
+    if (this.mainEnemy) {
+      this.mainEnemy.setX(this.player.x - 10);
+    }
   }
 }
 
