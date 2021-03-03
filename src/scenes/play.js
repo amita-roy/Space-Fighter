@@ -12,6 +12,7 @@ class PlayScene extends BaseScene {
     this.cursors = null;
     this.enemyFrequency = this.config.height / 2;
     this.mainEnemy = null;
+    this.mainEnemyBulletCount = 0;
 
     this.laser = null;
   }
@@ -54,6 +55,7 @@ class PlayScene extends BaseScene {
     const bigEnem = new BigAlien(this.config);
     this.mainEnemy = this.physics.add
       .sprite(this.player.x, 0, bigEnem.sprite)
+      .setImmovable(true)
       .setOrigin(0.5, 0);
 
     this.mainEnemy.setVelocityY(bigEnem.bodyVelocity);
@@ -89,17 +91,28 @@ class PlayScene extends BaseScene {
     this.time.addEvent({
       delay: 1000,
       callback: () => {
-        this.scene.restart();
+        this.scene.stop('PlayScene');
+        this.scene.start('MenuScene');
       },
+      callbackScope: this,
       loop: false,
     });
   }
 
-  createCollider() {
+  gameStatus() {
+    const count = this.mainEnemyBulletCount;
+
+    if (count === 3) {
+      this.restartGame();
+    }
+    this.mainEnemyBulletCount += 1;
+  }
+
+  createMainEnemyCollider() {
     this.physics.add.collider(
       this.mainEnemy && this.mainEnemy,
       this.laser,
-      this.restartGame,
+      this.gameStatus,
       null,
       this
     );
@@ -130,7 +143,7 @@ class PlayScene extends BaseScene {
 
     this.handleLaserEvent();
 
-    this.createCollider();
+    this.createMainEnemyCollider();
   }
 
   update() {
@@ -138,6 +151,7 @@ class PlayScene extends BaseScene {
 
     this.laser.setX(this.player.x);
     this.repeatLaser();
+    this.gameStatus();
   }
 }
 
