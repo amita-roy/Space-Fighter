@@ -19,12 +19,18 @@ class PlayScene extends BaseScene {
     this.enemy1.setVelocityY(100);
   }
 
+  repeatUfo() {
+    if (this.enemy1.y > this.config.height) {
+      this.createUfoAlien();
+      this.enemy1.play('ufo');
+    }
+  }
+
   createPlayer() {
     const { width, height } = this.config;
     this.player = this.physics.add
       .sprite(width / 2, height, 'playerSprite')
       .setOrigin(0.5, 1);
-    this.player.setCollideWorldBounds();
   }
 
   playerMovement() {
@@ -39,6 +45,18 @@ class PlayScene extends BaseScene {
     if (this.cursors.up.isDown && this.player.body.touching.down) {
       this.player.setVelocityY(-330);
     }
+  }
+
+  restartGame() {
+    this.explode();
+    this.physics.pause();
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.scene.restart();
+      },
+      loop: false,
+    });
   }
 
   create() {
@@ -63,15 +81,14 @@ class PlayScene extends BaseScene {
       frameRate: 15,
       repeat: -1,
     });
+
     this.player.play('fly');
     this.enemy1.play('ufo');
   }
 
   update() {
     this.playerMovement();
-    if (this.enemy1.y > this.config.height) {
-      this.createUfoAlien();
-    }
+    this.repeatUfo();
   }
 }
 

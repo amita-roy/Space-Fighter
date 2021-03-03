@@ -1,5 +1,5 @@
 class Player {
-  constructor(name) {
+  constructor(name = '') {
     this.name = name;
     this.score = 0;
     this.isDead = false;
