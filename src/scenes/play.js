@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import StarAlien from '../components/starAlien';
 import UfoAlien from '../components/ufoAlien';
 import BaseScene from './base';
 
@@ -14,38 +15,39 @@ class PlayScene extends BaseScene {
 
   initiateEnemy() {
     const enemy1 = new UfoAlien(this.config);
-    this.enemies.push(enemy1.getDetails());
+    const enemy2 = new StarAlien(this.config);
+    this.enemies.push(enemy1.getDetails(), enemy2.getDetails());
   }
 
   repeatEnemy() {
-    if (this.enemy1.y >= this.config.height) {
+    if (this.enemy1.y >= this.config.height - 300) {
       this.createEnemy();
     }
   }
 
+  enemyAnimation(enemy) {
+    this.anims.create({
+      key: enemy.key,
+      frames: this.anims.generateFrameNumbers(enemy.sprite, {
+        start: enemy.frameStart,
+        end: enemy.frameEnd,
+      }),
+      frameRate: enemy.frameRate,
+      repeat: -1,
+    });
+    this.enemy1.play(enemy.key);
+  }
+
   createEnemy() {
     this.enemies.forEach((enemy) => {
+      const randomNum = Math.random(0, 200);
       const width = Phaser.Math.Between(...enemy.positionRange);
       this.enemy1 = this.physics.add
-        .sprite(width, 0, enemy.sprite)
+        .sprite(width + randomNum, 0, enemy.sprite)
         .setOrigin(0.5, 0);
 
       this.enemy1.setVelocityY(enemy.bodyVelocity);
-    });
-  }
-
-  enemyAnimation() {
-    this.enemies.forEach((enemy) => {
-      this.anims.create({
-        key: enemy.key,
-        frames: this.anims.generateFrameNumbers(enemy.sprite, {
-          start: enemy.frameStart,
-          end: enemy.frameEnd,
-        }),
-        frameRate: enemy.frameRate,
-        repeat: -1,
-      });
-      this.enemy1.play(enemy.key);
+      this.enemyAnimation(enemy);
     });
   }
 
@@ -98,7 +100,6 @@ class PlayScene extends BaseScene {
     });
 
     this.player.play('fly');
-    this.enemyAnimation();
   }
 
   update() {
