@@ -15,6 +15,7 @@ class PlayScene extends BaseScene {
     this.starEnemy = null;
     this.starAlien = null;
     this.mainEnemy = null;
+    this.score = null;
 
     this.laser = null;
   }

@@ -8,6 +8,7 @@ import mis1Shoot from '../assets/images/mis1Shoot.png';
 import mis1Explosion from '../assets/images/mis1Explosion.png';
 import starAlien from '../assets/images/starAlien.png';
 import bigAlien from '../assets/images/alienshUpdated.png';
+import scoreBase from '../assets/images/scoreBaseBg.png';
 
 class PreloadScene extends Phaser.Scene {
   constructor(config) {
@@ -18,6 +19,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('menuMainBG', menuMainBG);
     this.load.image('menuTopBG', menuTopBG);
     this.load.image('menuLogo', menuLogo);
+    this.load.image('scoreBase', scoreBase);
 
     this.load.spritesheet('playerSprite', playerSprite, {
       frameWidth: 104,
