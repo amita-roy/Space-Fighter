@@ -1,6 +1,6 @@
-import BaseScene from './base';
+import BackgroundScene from './background';
 
-class MenuScene extends BaseScene {
+class MenuScene extends BackgroundScene {
   constructor(config) {
     super('MenuScene', config);
     this.screenCenter = [config.width / 2, config.height / 2];
@@ -12,11 +12,16 @@ class MenuScene extends BaseScene {
     ];
   }
 
+  createMenuBG() {
+    this.add.image(0, 0, 'menuTopBG').setOrigin(0).setDepth(4);
+  }
+
   createLogo() {
     const [w, h] = this.screenCenter;
     const logo = this.add
       .image(w + 400, h - 200, 'menuLogo')
       .setInteractive()
+      .setDepth(5)
       .setOrigin(0.5);
 
     logo.on('pointerover', () => {
@@ -54,8 +59,31 @@ class MenuScene extends BaseScene {
     });
   }
 
+  createMenu(menu, setupMenuEvent) {
+    let lastPositionY = 0;
+    menu.forEach((menuItem) => {
+      const menuPosition = [
+        this.screenCenter[0] + 400,
+        this.screenCenter[1] + lastPositionY,
+      ];
+
+      menuItem.textGO = this.add
+        .text(...menuPosition, menuItem.text, {
+          fontSize: '32px',
+          fill: '#fff',
+        })
+        .setOrigin(0.5, 1)
+        .setDepth(5)
+        .setShadow(5, 5, '#000', 5);
+
+      lastPositionY += 60;
+      setupMenuEvent(menuItem);
+    });
+  }
+
   create() {
-    super.createMenuBG();
+    super.create();
+    this.createMenuBG();
     this.createLogo();
     this.createMenu(this.menu, (menuItem) => this.setupMenuEvent(menuItem));
   }

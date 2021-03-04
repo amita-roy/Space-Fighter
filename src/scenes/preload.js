@@ -9,6 +9,7 @@ import mis1Explosion from '../assets/images/mis1Explosion.png';
 import starAlien from '../assets/images/starAlien.png';
 import bigAlien from '../assets/images/alienshUpdated.png';
 import scoreBase from '../assets/images/scoreBaseBg.png';
+import playBG from '../assets/images/playBG.jpg';
 
 class PreloadScene extends Phaser.Scene {
   constructor(config) {
@@ -46,10 +47,11 @@ class PreloadScene extends Phaser.Scene {
       frameWidth: 255,
       frameHeight: 255,
     });
+    this.load.image('playBG', playBG);
   }
 
   create() {
-    this.scene.start('ScoreScene');
+    this.scene.start('MenuScene');
   }
 }
 

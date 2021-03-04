@@ -15,7 +15,7 @@ class PlayScene extends BaseScene {
     this.starEnemy = null;
     this.starAlien = null;
     this.mainEnemy = null;
-    this.score = null;
+    this.score = 0;
 
     this.laser = null;
   }
@@ -212,6 +212,7 @@ class PlayScene extends BaseScene {
   }
 
   create() {
+    super.create();
     this.createPlayer();
     this.createUfo();
     this.createStarEnem();
