@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   devtool: 'inline-source-map',
   devServer: {
@@ -23,4 +25,11 @@ module.exports = {
       },
     ],
   },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      CANVAS_RENDERER: JSON.stringify(true),
+      WEBGL_RENDERER: JSON.stringify(true),
+    }),
+  ],
 };
