@@ -41,6 +41,7 @@ class PlayScene extends BaseScene {
     this.explosion = this.physics.add
       .sprite(w, h, 'mis1Explosion')
       .setOrigin(0.5)
+      .setDepth(2)
       .setVisible(false)
       .setFlipY(true);
 
@@ -120,6 +121,7 @@ class PlayScene extends BaseScene {
     const width = Phaser.Math.Between(...details.positionRange);
     this.starEnemy = this.physics.add
       .sprite(width, 0, details.sprite)
+      .setDepth(2)
       .setImmovable(true)
       .setOrigin(0.5, 0);
 
@@ -158,6 +160,7 @@ class PlayScene extends BaseScene {
     const width = Phaser.Math.Between(...details.positionRange);
     this.ufo = this.physics.add
       .sprite(width, 0, details.sprite)
+      .setDepth(2)
       .setImmovable(true)
       .setOrigin(0.5, 0);
 
@@ -226,6 +229,7 @@ class PlayScene extends BaseScene {
     const bigEnem = new BigAlien(this.config);
     this.mainEnemy = this.physics.add
       .sprite(this.player.x, 0, bigEnem.sprite)
+      .setDepth(2)
       .setImmovable(true)
       .setOrigin(0.5, 0);
 
@@ -260,8 +264,9 @@ class PlayScene extends BaseScene {
 
   restartGame() {
     this.physics.pause();
+    this.saveBestScore();
     this.time.addEvent({
-      delay: 1000,
+      delay: 2000,
       callback: () => {
         this.scene.stop('PlayScene');
         this.scene.start('MenuScene');
@@ -340,6 +345,38 @@ class PlayScene extends BaseScene {
     );
   }
 
+  createPlayerCollider() {
+    if (this.starEnemy) {
+      this.physics.add.collider(
+        this.starEnemy,
+        this.player,
+        this.restartGame,
+        null,
+        this
+      );
+    }
+
+    if (this.ufo) {
+      this.physics.add.collider(
+        this.ufo,
+        this.player,
+        this.restartGame,
+        null,
+        this
+      );
+    }
+
+    if (this.mainEnemy) {
+      this.physics.add.collider(
+        this.mainEnemy,
+        this.player,
+        this.restartGame,
+        null,
+        this
+      );
+    }
+  }
+
   repeatMainEnemy() {
     if (this.mainEnemy && this.mainEnemy.y > this.config.height) {
       this.createBigEnemy();
@@ -382,6 +419,7 @@ class PlayScene extends BaseScene {
 
     this.createUfoCollider();
     this.createStarEnemyCollider();
+    this.createPlayerCollider();
   }
 
   update() {
@@ -395,6 +433,7 @@ class PlayScene extends BaseScene {
     this.createUfoCollider();
     this.createMainEnemyCollider();
     this.createStarEnemyCollider();
+    this.createPlayerCollider();
   }
 }
 
