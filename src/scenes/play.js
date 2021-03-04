@@ -16,10 +16,75 @@ class PlayScene extends BaseScene {
     this.starAlien = null;
     this.mainEnemy = null;
     this.score = 0;
+    this.scoreText = '';
     this.mainHealth = 3;
     this.isMainDead = false;
+    this.explosion = null;
 
     this.laser = null;
+  }
+
+  explode() {
+    this.explosion.setVisible(true);
+
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.explosion.setVisible(false);
+      },
+      callbackScope: this,
+      loop: false,
+    });
+  }
+
+  createExplosion(w, h) {
+    this.explosion = this.physics.add
+      .sprite(w, h, 'mis1Explosion')
+      .setOrigin(0.5)
+      .setVisible(false)
+      .setFlipY(true);
+
+    this.explosionAnims();
+  }
+
+  explosionAnims() {
+    this.anims.create({
+      key: 'blast',
+      frames: this.anims.generateFrameNumbers('mis1Explosion', {
+        start: 0,
+        end: 8,
+      }),
+      frameRate: 9,
+      repeat: 0,
+    });
+
+    this.explosion.play('blast');
+  }
+
+  createScore() {
+    this.score = 0;
+    const bestScore = localStorage.getItem('bestScore');
+    this.scoreText = this.add
+      .text(16, 16, `Score: ${0}`, {
+        fontSize: '32px',
+        fill: '#FFF',
+      })
+      .setDepth(6);
+    this.add
+      .text(16, 50, `Best Score: ${bestScore || 0}`, {
+        fontSize: '18px',
+        fill: '#FFF',
+      })
+      .setDepth(6);
+  }
+
+  saveBestScore() {
+    const bestScoreText = localStorage.getItem('bestScore');
+    const bestScore = bestScoreText && parseInt(bestScoreText, 10);
+
+    if (!bestScore || this.score > bestScore) {
+      localStorage.setItem('bestScore', this.score);
+    }
   }
 
   decreaseHealth() {
@@ -27,12 +92,14 @@ class PlayScene extends BaseScene {
     this.score += 0;
   }
 
-  increaseScoreby20() {
-    this.score += 20;
-  }
-
   increaseScoreby10() {
     this.score += 10;
+    this.scoreText.setText(`Score: ${this.score}`);
+  }
+
+  increaseScoreby5() {
+    this.score += 5;
+    this.scoreText.setText(`Score: ${this.score}`);
   }
 
   spawnLaser() {
@@ -223,7 +290,7 @@ class PlayScene extends BaseScene {
           } else {
             enemy.destroy();
             laser.destroy();
-            this.increaseScoreby20();
+            this.increaseScoreby10();
             this.spawnMainEnemy();
           }
           this.spawnLaser();
@@ -239,9 +306,12 @@ class PlayScene extends BaseScene {
       this.ufo && this.ufo,
       this.laser,
       (enemy, laser) => {
+        this.createExplosion(laser.x, laser.y);
+        this.explode();
         enemy.destroy();
         laser.destroy();
-        this.increaseScoreby10();
+
+        this.increaseScoreby5();
         this.spawnUfoEnemy();
         this.spawnLaser();
       },
@@ -257,7 +327,7 @@ class PlayScene extends BaseScene {
       (enemy, laser) => {
         enemy.destroy();
         laser.destroy();
-        this.increaseScoreby10();
+        this.increaseScoreby5();
         this.spawnLaser();
         this.spawnStarEnemy();
       },
@@ -281,6 +351,7 @@ class PlayScene extends BaseScene {
     this.createPlayer();
     this.createUfo();
     this.createStarEnem();
+    this.createScore();
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
