@@ -28,7 +28,7 @@ class PlayScene extends BaseScene {
     this.explosion.setVisible(true);
 
     this.time.addEvent({
-      delay: 1000,
+      delay: 500,
       callback: () => {
         this.explosion.setVisible(false);
       },
@@ -246,15 +246,15 @@ class PlayScene extends BaseScene {
 
   playerMovement() {
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-200);
+      this.player.setVelocityX(-300);
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(200);
+      this.player.setVelocityX(300);
     } else {
       this.player.setVelocityX(0);
     }
 
     if (this.cursors.up.isDown && this.player.body.touching.down) {
-      this.player.setVelocityY(-330);
+      this.player.setVelocityY(-400);
     }
   }
 
@@ -283,7 +283,8 @@ class PlayScene extends BaseScene {
         this.laser,
         (enemy, laser) => {
           this.decreaseHealth();
-
+          this.createExplosion(laser.x, laser.y);
+          this.explode();
           if (this.mainHealth > 0) {
             laser.destroy();
             this.score += 0;
@@ -293,6 +294,7 @@ class PlayScene extends BaseScene {
             this.increaseScoreby10();
             this.spawnMainEnemy();
           }
+
           this.spawnLaser();
         },
         null,
@@ -325,6 +327,8 @@ class PlayScene extends BaseScene {
       this.starEnemy && this.starEnemy,
       this.laser,
       (enemy, laser) => {
+        this.createExplosion(laser.x, laser.y);
+        this.explode();
         enemy.destroy();
         laser.destroy();
         this.increaseScoreby5();
