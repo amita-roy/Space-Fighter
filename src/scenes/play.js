@@ -16,8 +16,35 @@ class PlayScene extends BaseScene {
     this.starAlien = null;
     this.mainEnemy = null;
     this.score = 0;
+    this.mainHealth = 3;
+    this.isMainDead = false;
 
     this.laser = null;
+  }
+
+  decreaseHealth() {
+    this.mainHealth -= 1;
+    this.score += 0;
+  }
+
+  increaseScoreby20() {
+    this.score += 20;
+  }
+
+  increaseScoreby10() {
+    this.score += 10;
+  }
+
+  spawnLaser() {
+    this.createPlayerLaser();
+  }
+
+  spawnStarEnemy() {
+    this.createStarEnem();
+  }
+
+  spawnUfoEnemy() {
+    this.createUfo();
   }
 
   createStarEnem() {
@@ -97,8 +124,9 @@ class PlayScene extends BaseScene {
     const laser = new Laser(this.player.y);
     const laserDetails = laser.getDetails();
     this.laser = this.physics.add
-      .sprite(this.player.x, laserDetails.position - 220, laserDetails.sprite)
+      .sprite(this.player.x, laserDetails.position - 100, laserDetails.sprite)
       .setFlipY(true)
+      .setDepth(1)
       .setOrigin(0.5, 0);
 
     this.laser.setVisible(false);
@@ -121,7 +149,7 @@ class PlayScene extends BaseScene {
   }
 
   repeatLaser() {
-    if (this.laser.y < 400) {
+    if (this.laser.y < 500) {
       this.createPlayerLaser();
       this.handleLaserEvent();
     }
@@ -145,6 +173,7 @@ class PlayScene extends BaseScene {
     const { width, height } = this.config;
     this.player = this.physics.add
       .sprite(width / 2, height, 'playerSprite')
+      .setDepth(2)
       .setOrigin(0.5, 1);
   }
 
@@ -175,12 +204,30 @@ class PlayScene extends BaseScene {
     });
   }
 
+  spawnMainEnemy() {
+    this.mainHealth = 3;
+    this.repeatMainEnemy();
+  }
+
   createMainEnemyCollider() {
     if (this.mainEnemy) {
       this.physics.add.collider(
         this.mainEnemy,
         this.laser,
-        this.restartGame,
+        (enemy, laser) => {
+          this.decreaseHealth();
+
+          if (this.mainHealth > 0) {
+            laser.destroy();
+            this.score += 0;
+          } else {
+            enemy.destroy();
+            laser.destroy();
+            this.increaseScoreby20();
+            this.spawnMainEnemy();
+          }
+          this.spawnLaser();
+        },
         null,
         this
       );
@@ -191,7 +238,13 @@ class PlayScene extends BaseScene {
     this.physics.add.collider(
       this.ufo && this.ufo,
       this.laser,
-      this.restartGame,
+      (enemy, laser) => {
+        enemy.destroy();
+        laser.destroy();
+        this.increaseScoreby10();
+        this.spawnUfoEnemy();
+        this.spawnLaser();
+      },
       null,
       this
     );
@@ -201,10 +254,22 @@ class PlayScene extends BaseScene {
     this.physics.add.collider(
       this.starEnemy && this.starEnemy,
       this.laser,
-      this.restartGame,
+      (enemy, laser) => {
+        enemy.destroy();
+        laser.destroy();
+        this.increaseScoreby10();
+        this.spawnLaser();
+        this.spawnStarEnemy();
+      },
       null,
       this
     );
+  }
+
+  repeatMainEnemy() {
+    if (this.mainEnemy && this.mainEnemy.y > this.config.height) {
+      this.createBigEnemy();
+    }
   }
 
   handleLaserEvent() {
@@ -230,19 +295,15 @@ class PlayScene extends BaseScene {
 
     this.player.play('fly');
 
+    this.createPlayerLaser();
+
+    this.handleLaserEvent();
     this.time.addEvent({
       delay: 10000,
       callback: this.createBigEnemy,
       callbackScope: this,
-      loop: false,
+      loop: true,
     });
-
-    // this.createBigEnemy();
-    this.createPlayerLaser();
-
-    this.handleLaserEvent();
-
-    // this.createMainEnemyCollider();
 
     this.createUfoCollider();
     this.createStarEnemyCollider();
@@ -253,6 +314,7 @@ class PlayScene extends BaseScene {
 
     this.laser.setX(this.player.x);
     this.repeatLaser();
+    this.repeatMainEnemy();
     this.repeatUfo();
     this.repeatStarEnemy();
     this.createUfoCollider();

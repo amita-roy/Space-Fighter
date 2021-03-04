@@ -1,7 +1,7 @@
 class StarAlien {
   constructor(config) {
     this.sprite = 'starAlien';
-    this.positionRange = [config.width / 50, config.width - 50];
+    this.positionRange = [config.width / 80, config.width - 50];
     this.bodyVelocity = 80;
     this.key = 'star';
     this.frameStart = 0;
