@@ -1,14 +1,18 @@
-import BaseScene from './base';
+import BackgroundScene from './background';
+// import BackgroundScene from './background';
 
-class ScoreScene extends BaseScene {
+class ScoreScene extends BackgroundScene {
   constructor(config) {
     super('ScoreScene', config);
   }
 
   createBg() {
     const { width, height } = this.config;
-    this.add.image(0, 0, 'menuMainBG').setOrigin(0);
-    this.add.image(width / 2, height / 2, 'scoreBase').setOrigin(0.5);
+
+    this.add
+      .image(width / 2, height / 2, 'scoreBase')
+      .setOrigin(0.5)
+      .setDepth(3);
   }
 
   createScore() {
@@ -20,10 +24,12 @@ class ScoreScene extends BaseScene {
         fill: '#000',
         fontSize: '32px',
       })
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setDepth(4);
   }
 
   create() {
+    super.create();
     this.createBg();
     this.createScore();
   }
