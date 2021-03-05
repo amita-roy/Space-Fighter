@@ -12,6 +12,7 @@ import scoreBase from '../assets/images/scoreBaseBg.png';
 import playBG from '../assets/images/playBG.jpg';
 import returnButton from '../assets/images/returnButton.png';
 import muteButton from '../assets/images/stopMusic.png';
+import gameTitle from '../assets/images/title.png';
 import buttonSound from '../assets/audio/button-14.wav';
 import misExplosionSound from '../assets/audio/blast.wav';
 import misFireSound from '../assets/audio/space_laser.wav';
@@ -111,6 +112,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.image('menuTopBG', menuTopBG);
     this.load.image('menuLogo', menuLogo);
     this.load.image('scoreBase', scoreBase);
+    this.load.image('gameTitle', gameTitle);
 
     this.load.spritesheet('playerSprite', playerSprite, {
       frameWidth: 104,

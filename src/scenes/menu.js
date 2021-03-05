@@ -12,6 +12,13 @@ class MenuScene extends BackgroundScene {
     ];
   }
 
+  createTitle() {
+    this.add
+      .image(20, this.config.height / 2, 'gameTitle')
+      .setOrigin(0, 0.5)
+      .setDepth(8);
+  }
+
   createMuteButton() {
     const muteButton = this.add
       .image(this.config.width - 70, 100, 'muteButton')
@@ -103,6 +110,7 @@ class MenuScene extends BackgroundScene {
     };
     this.sfx.menuStart.play();
     this.createMenuBG();
+    this.createTitle();
     this.createLogo();
     this.createMuteButton();
     this.createMenu(this.menu, (menuItem) => this.setupMenuEvent(menuItem));
