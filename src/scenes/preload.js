@@ -10,6 +10,7 @@ import starAlien from '../assets/images/starAlien.png';
 import bigAlien from '../assets/images/alienshUpdated.png';
 import scoreBase from '../assets/images/scoreBaseBg.png';
 import playBG from '../assets/images/playBG.jpg';
+import returnButton from '../assets/images/returnButton.png';
 
 class PreloadScene extends Phaser.Scene {
   constructor(config) {
@@ -126,6 +127,7 @@ class PreloadScene extends Phaser.Scene {
       frameHeight: 255,
     });
     this.load.image('playBG', playBG);
+    this.load.image('returnButton', returnButton);
 
     this.timedEvent = this.time.delayedCall(2000, this.ready, [], this);
   }

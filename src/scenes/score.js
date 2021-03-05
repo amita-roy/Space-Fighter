@@ -4,15 +4,29 @@ import BackgroundScene from './background';
 class ScoreScene extends BackgroundScene {
   constructor(config) {
     super('ScoreScene', config);
+    this.base = null;
   }
 
   createBg() {
     const { width, height } = this.config;
 
-    this.add
+    this.base = this.add
       .image(width / 2, height / 2, 'scoreBase')
       .setOrigin(0.5)
       .setDepth(3);
+  }
+
+  createReturnButton() {
+    const backButton = this.add
+      .image(this.base.width - 15, this.base.height - 15, 'returnButton')
+      .setDepth(4)
+      .setInteractive()
+      .setOrigin(0);
+
+    backButton.on('pointerdown', () => {
+      this.scene.stop('ScoreScene');
+      this.scene.start('MenuScene');
+    });
   }
 
   createScore() {
@@ -32,6 +46,7 @@ class ScoreScene extends BackgroundScene {
     super.create();
     this.createBg();
     this.createScore();
+    this.createReturnButton();
   }
 }
 
