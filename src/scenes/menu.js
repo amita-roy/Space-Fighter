@@ -97,15 +97,15 @@ class MenuScene extends BackgroundScene {
 
   create() {
     super.create();
-    this.createMenuBG();
-    this.createLogo();
-    this.createMuteButton();
-    this.createMenu(this.menu, (menuItem) => this.setupMenuEvent(menuItem));
     this.sfx = {
       menuStart: this.sound.add('menuSound'),
       buttonClick: this.sound.add('buttonSound'),
     };
     this.sfx.menuStart.play();
+    this.createMenuBG();
+    this.createLogo();
+    this.createMuteButton();
+    this.createMenu(this.menu, (menuItem) => this.setupMenuEvent(menuItem));
   }
 }
 
