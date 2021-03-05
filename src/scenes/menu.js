@@ -49,6 +49,7 @@ class MenuScene extends BackgroundScene {
       textGO.setStyle({
         fill: '#ff0',
       });
+      this.sfx.buttonClick.play();
       if (menuItem.scene) {
         this.scene.start(menuItem.scene);
       }
@@ -86,6 +87,10 @@ class MenuScene extends BackgroundScene {
     this.createMenuBG();
     this.createLogo();
     this.createMenu(this.menu, (menuItem) => this.setupMenuEvent(menuItem));
+    this.sfx = {
+      // menuStart: this.sound.add('menuPlay'),
+      buttonClick: this.sound.add('buttonSound'),
+    };
   }
 }
 

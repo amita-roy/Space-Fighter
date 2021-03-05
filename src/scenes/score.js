@@ -24,6 +24,7 @@ class ScoreScene extends BackgroundScene {
       .setOrigin(0);
 
     backButton.on('pointerdown', () => {
+      this.sfx.buttonClick.play();
       this.scene.stop('ScoreScene');
       this.scene.start('MenuScene');
     });
@@ -47,6 +48,9 @@ class ScoreScene extends BackgroundScene {
     this.createBg();
     this.createScore();
     this.createReturnButton();
+    this.sfx = {
+      buttonClick: this.sound.add('buttonSound'),
+    };
   }
 }
 

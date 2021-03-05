@@ -26,7 +26,8 @@ class PlayScene extends BaseScene {
 
   explode() {
     this.explosion.setVisible(true);
-
+    this.sfx.laser.stop();
+    this.sfx.explosions.play();
     this.time.addEvent({
       delay: 500,
       callback: () => {
@@ -216,6 +217,7 @@ class PlayScene extends BaseScene {
 
   fire() {
     this.laser.setVisible(true).setVelocityY(-400);
+    this.sfx.laser.play();
   }
 
   repeatLaser() {
@@ -264,10 +266,11 @@ class PlayScene extends BaseScene {
   }
 
   restartGame() {
+    this.sfx.peCollision.play();
     this.physics.pause();
     this.saveBestScore();
     this.time.addEvent({
-      delay: 2000,
+      delay: 4000,
       callback: () => {
         this.scene.stop('PlayScene');
         this.scene.start('MenuScene');
@@ -394,6 +397,12 @@ class PlayScene extends BaseScene {
     this.createUfo();
     this.createStarEnem();
     this.createScore();
+
+    this.sfx = {
+      explosions: this.sound.add('misExplosionSound'),
+      laser: this.sound.add('misFireSound'),
+      peCollision: this.sound.add('peCollision'),
+    };
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
