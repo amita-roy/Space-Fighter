@@ -246,6 +246,7 @@ class PlayScene extends BaseScene {
       .sprite(width / 2, height, 'playerSprite')
       .setDepth(2)
       .setOrigin(0.5, 1);
+    this.player.setBodySize(this.player.width - 20, this.player.height - 38);
   }
 
   playerMovement() {
