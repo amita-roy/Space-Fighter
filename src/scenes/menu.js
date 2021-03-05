@@ -12,6 +12,18 @@ class MenuScene extends BackgroundScene {
     ];
   }
 
+  createMuteButton() {
+    const muteButton = this.add
+      .image(this.config.width - 70, 100, 'muteButton')
+      .setDepth(6)
+      .setInteractive()
+      .setOrigin(0.5);
+
+    muteButton.on('pointerdown', () => {
+      this.sfx.menuStart.stop();
+    });
+  }
+
   createMenuBG() {
     this.add.image(0, 0, 'menuTopBG').setOrigin(0).setDepth(4);
   }
@@ -49,6 +61,7 @@ class MenuScene extends BackgroundScene {
       textGO.setStyle({
         fill: '#ff0',
       });
+      this.sfx.menuStart.stop();
       this.sfx.buttonClick.play();
       if (menuItem.scene) {
         this.scene.start(menuItem.scene);
@@ -86,11 +99,13 @@ class MenuScene extends BackgroundScene {
     super.create();
     this.createMenuBG();
     this.createLogo();
+    this.createMuteButton();
     this.createMenu(this.menu, (menuItem) => this.setupMenuEvent(menuItem));
     this.sfx = {
-      // menuStart: this.sound.add('menuPlay'),
+      menuStart: this.sound.add('menuSound'),
       buttonClick: this.sound.add('buttonSound'),
     };
+    this.sfx.menuStart.play();
   }
 }
 

@@ -11,10 +11,12 @@ import bigAlien from '../assets/images/alienshUpdated.png';
 import scoreBase from '../assets/images/scoreBaseBg.png';
 import playBG from '../assets/images/playBG.jpg';
 import returnButton from '../assets/images/returnButton.png';
+import muteButton from '../assets/images/stopMusic.png';
 import buttonSound from '../assets/audio/button-14.wav';
 import misExplosionSound from '../assets/audio/blast.wav';
 import misFireSound from '../assets/audio/space_laser.wav';
 import peCollision from '../assets/audio/PECollision.wav';
+import menuSound from '../assets/audio/menu.wav';
 
 class PreloadScene extends Phaser.Scene {
   constructor(config) {
@@ -132,6 +134,7 @@ class PreloadScene extends Phaser.Scene {
     });
     this.load.image('playBG', playBG);
     this.load.image('returnButton', returnButton);
+    this.load.image('muteButton', muteButton);
 
     this.timedEvent = this.time.delayedCall(2000, this.ready, [], this);
 
@@ -139,6 +142,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.audio('misExplosionSound', misExplosionSound);
     this.load.audio('misFireSound', misFireSound);
     this.load.audio('peCollision', peCollision);
+    this.load.audio('menuSound', menuSound);
   }
 }
 
