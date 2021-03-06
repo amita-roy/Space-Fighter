@@ -3,6 +3,7 @@ import PreloadScene from './scenes/preload';
 import MenuScene from './scenes/menu';
 import PlayScene from './scenes/play';
 import ScoreScene from './scenes/score';
+import LeaderBoardScene from './scenes/leaderBoardScene';
 
 const WIDTH = 1200;
 const HEIGHT = 800;
@@ -17,7 +18,13 @@ const SHARED_CONFIG = {
   screenCenter: PLAYER_POSITION,
 };
 
-const scenes = [PreloadScene, PlayScene, MenuScene, ScoreScene];
+const scenes = [
+  PreloadScene,
+  PlayScene,
+  MenuScene,
+  ScoreScene,
+  LeaderBoardScene,
+];
 const createScene = (Scene) => new Scene(SHARED_CONFIG);
 
 const initScenes = () => scenes.map(createScene);

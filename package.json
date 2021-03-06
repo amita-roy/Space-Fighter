@@ -35,6 +35,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "phaser": "^3.52.0"
   },
   "jest": {
