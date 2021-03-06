@@ -7,7 +7,7 @@ class MenuScene extends BackgroundScene {
     this.menu = [
       { scene: 'PlayScene', text: 'Play' },
       { scene: 'ScoreScene', text: 'Score' },
-      { scene: 'LeaderBoard', text: 'LeaderBoard' },
+      { scene: 'LeaderBoardScene', text: 'LeaderBoard' },
       { scene: null, text: 'Exit' },
     ];
   }

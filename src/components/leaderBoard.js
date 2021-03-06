@@ -8,6 +8,7 @@ class LeaderBoard {
   }
 
   getScores() {
+    console.log(this.scores);
     return this.scores;
   }
 }

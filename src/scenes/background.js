@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import StarAlien from '../components/starAlien';
 import UfoAlien from '../components/ufoAlien';
-// import BaseScene from './base';
 
 class BackgroundScene extends Phaser.Scene {
   constructor(key, config) {

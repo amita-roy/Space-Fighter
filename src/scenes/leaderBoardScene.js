@@ -1,27 +1,22 @@
 import BackgroundScene from './background';
-// import fetchLeaderBoard from '../api/leaderBoardApi';
-// import LeaderBoard from '../components/leaderBoard';
+import Scores from '../helper';
 
-// const leaderBoard = new LeaderBoard();
-
-// const fetchScores = async () => {
-//   try {
-//     const response = await fetchLeaderBoard();
-//     return response.result;
-//   } catch (error) {
-//     console.log('No data found for this city');
-//   }
-// };
-
-// leaderBoard.getLeaderBoardScores(fetchScores());
+const scores = [
+  { name: 'ponny', score: '234' },
+  { name: 'Dodo', score: '567' },
+  { name: 'Dodo', score: '567' },
+  { name: 'Dodo', score: '567' },
+  { name: 'Dodo', score: '567' },
+];
 
 class LeaderBoardScene extends BackgroundScene {
   constructor(config) {
     super('LeaderBoardScene', config);
     this.base = null;
+    this.scores = [];
   }
 
-  createBoardBg() {
+  createBackground() {
     const { width, height } = this.config;
 
     this.base = this.add
@@ -30,7 +25,7 @@ class LeaderBoardScene extends BackgroundScene {
       .setDepth(3);
   }
 
-  createBackButton() {
+  createReturnButton() {
     const backButton = this.add
       .image(this.base.width - 15, this.base.height - 15, 'returnButton')
       .setDepth(4)
@@ -39,29 +34,47 @@ class LeaderBoardScene extends BackgroundScene {
 
     backButton.on('pointerdown', () => {
       this.sfx.buttonClick.play();
-      this.scene.stop('ScoreScene');
+      this.scene.stop('LeaderBoardScene');
       this.scene.start('MenuScene');
     });
   }
 
-  createBoardScores() {
+  createScores() {
     const { width, height } = this.config;
-
-    const bestScoreText = localStorage.getItem('bestScore');
-    this.add
-      .text(width / 2, height / 2, `Best Score: ${bestScoreText || 0}`, {
-        fill: '#000',
-        fontSize: '32px',
-      })
-      .setOrigin(0.5)
-      .setDepth(4);
+    const lastPosition = { x: width / 2, y: this.base.height / 2 + 40 };
+    if (scores.length) {
+      scores.forEach((result) => {
+        this.add
+          .text(
+            lastPosition.x,
+            lastPosition.y,
+            `${result.name}: ${result.score}`,
+            {
+              fill: '#000',
+              fontSize: '32px',
+            }
+          )
+          .setOrigin(0.5)
+          .setAlign()
+          .setDepth(4);
+        lastPosition.y += 40;
+      });
+    } else {
+      this.add
+        .text(width / 2, height / 2, 'No scores to show', {
+          fill: '#000',
+          fontSize: '32px',
+        })
+        .setOrigin(0.5)
+        .setDepth(4);
+    }
   }
 
   create() {
     super.create();
-    this.createBoardBg();
-    this.createBoardScores();
-    this.createBackButton();
+    this.createBackground();
+    this.createScores();
+    this.createReturnButton();
     this.sfx = {
       buttonClick: this.sound.add('buttonSound'),
     };
