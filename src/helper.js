@@ -1,18 +1,26 @@
-import fetchLeaderBoard from './api/leaderBoardApi';
-import LeaderBoard from './components/leaderBoard';
-
-const leaderBoard = new LeaderBoard();
+import $ from 'jquery';
+import { fetchLeaderBoard, postScores } from './api/leaderBoardApi';
 
 const fetchScores = async () => {
   try {
     const response = await fetchLeaderBoard();
-    leaderBoard.getLeaderBoardScores(response.result);
+    return response.result;
   } catch (error) {
-    console.log('No data found for this city');
+    console.log('No data found for this game');
   }
 };
 
-export default () => {
-  fetchScores();
-  return leaderBoard.getScores();
+const postPlayerScore = (event) => {
+  event.preventDefault();
+  const form = $(event.target);
+  const player = form.serializeArray()[0].value;
+  const score = localStorage.getItem('bestScore');
+
+  postScores(player, score);
+
+  form[0].reset();
 };
+
+$('#playerForm').on('submit', postPlayerScore);
+
+export default fetchScores;

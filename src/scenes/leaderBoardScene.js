@@ -1,19 +1,11 @@
 import BackgroundScene from './background';
-import Scores from '../helper';
-
-const scores = [
-  { name: 'ponny', score: '234' },
-  { name: 'Dodo', score: '567' },
-  { name: 'Dodo', score: '567' },
-  { name: 'Dodo', score: '567' },
-  { name: 'Dodo', score: '567' },
-];
+import fetchScores from '../helper';
 
 class LeaderBoardScene extends BackgroundScene {
   constructor(config) {
     super('LeaderBoardScene', config);
     this.base = null;
-    this.scores = [];
+    this.loadingText = null;
   }
 
   createBackground() {
@@ -39,7 +31,8 @@ class LeaderBoardScene extends BackgroundScene {
     });
   }
 
-  createScores() {
+  createScores(scores) {
+    this.loadingText.setVisible(false);
     const { width, height } = this.config;
     const lastPosition = { x: width / 2, y: this.base.height / 2 + 40 };
     if (scores.length) {
@@ -48,7 +41,7 @@ class LeaderBoardScene extends BackgroundScene {
           .text(
             lastPosition.x,
             lastPosition.y,
-            `${result.name}: ${result.score}`,
+            `${result.user}: ${result.score}`,
             {
               fill: '#000',
               fontSize: '32px',
@@ -70,10 +63,22 @@ class LeaderBoardScene extends BackgroundScene {
     }
   }
 
+  createLoadingScores() {
+    const { width, height } = this.config;
+    this.loadingText = this.add
+      .text(width / 2, height / 2, 'Loading.....', {
+        fill: '#000',
+        fontSize: '32px',
+      })
+      .setDepth(4)
+      .setOrigin(0.5);
+    fetchScores().then((result) => this.createScores(result));
+  }
+
   create() {
     super.create();
     this.createBackground();
-    this.createScores();
+    this.createLoadingScores();
     this.createReturnButton();
     this.sfx = {
       buttonClick: this.sound.add('buttonSound'),

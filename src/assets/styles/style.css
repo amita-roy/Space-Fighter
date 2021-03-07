@@ -15,7 +15,7 @@ body {
 }
 
 .left-container {
-  width: 500px;
+  width: 300px;
   padding: 20px 40px;
   background-image: linear-gradient(to right bottom, #011a39, #003b8371);
   margin-right: 30px;
@@ -39,7 +39,7 @@ body {
   color: #fff;
 }
 
-#playerForm input {
+#playerForm input[type='text'] {
   width: 100%;
   padding: 10px 20px;
   border-radius: 6px;
@@ -52,4 +52,17 @@ body {
 #playerForm input:active,
 #playerForm input:focus {
   outline: none;
+}
+
+#submit {
+  cursor: pointer;
+  background-color: #011a39;
+  color: white;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  margin-top: 15px;
+  font-size: 18px;
 }

@@ -15,7 +15,14 @@ const fetchLeaderBoard = async () => {
     return error;
   }
 };
+const postScores = (user, score) => {
+  try {
+    client.post(`${gameID}/scores`, { user, score });
+  } catch (error) {
+    return error;
+  }
+};
 
 // nBLiE3xmvt6OEGr5JhHT
 
-export default fetchLeaderBoard;
+export { fetchLeaderBoard, postScores };
