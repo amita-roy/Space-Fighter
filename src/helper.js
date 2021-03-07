@@ -6,7 +6,7 @@ const fetchScores = async () => {
     const response = await fetchLeaderBoard();
     return response.result;
   } catch (error) {
-    console.log('No data found for this game');
+    return 'No data found for this game';
   }
 };
 

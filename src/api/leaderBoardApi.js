@@ -18,8 +18,9 @@ const fetchLeaderBoard = async () => {
 const postScores = (user, score) => {
   try {
     client.post(`${gameID}/scores`, { user, score });
+    console.log('Score Posted successfully!');
   } catch (error) {
-    return error;
+    console.log(error);
   }
 };
 
