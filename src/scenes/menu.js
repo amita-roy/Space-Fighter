@@ -8,7 +8,6 @@ class MenuScene extends BackgroundScene {
       { scene: 'PlayScene', text: 'Play' },
       { scene: 'ScoreScene', text: 'Score' },
       { scene: 'LeaderBoardScene', text: 'LeaderBoard' },
-      { scene: null, text: 'Exit' },
     ];
   }
 
@@ -72,10 +71,6 @@ class MenuScene extends BackgroundScene {
       this.sfx.buttonClick.play();
       if (menuItem.scene) {
         this.scene.start(menuItem.scene);
-      }
-
-      if (menuItem.text === 'Exit') {
-        this.game.destroy(true);
       }
     });
   }

@@ -34,6 +34,14 @@ class ScoreScene extends BackgroundScene {
     const { width, height } = this.config;
 
     const bestScoreText = localStorage.getItem('bestScore');
+    const currentScore = localStorage.getItem('currentScore');
+    this.add
+      .text(width / 2, height / 2 - 30, `Current Score: ${currentScore || 0}`, {
+        fill: '#000',
+        fontSize: '32px',
+      })
+      .setOrigin(0.5)
+      .setDepth(4);
     this.add
       .text(width / 2, height / 2, `Best Score: ${bestScoreText || 0}`, {
         fill: '#000',
