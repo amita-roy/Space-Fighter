@@ -72,7 +72,10 @@ class LeaderBoardScene extends BackgroundScene {
       })
       .setDepth(4)
       .setOrigin(0.5);
-    fetchScores().then((result) => this.createScores(result));
+    fetchScores().then((result) => {
+      const top5 = result.sort((a, b) => b.score - a.score).slice(0, 5);
+      return this.createScores(top5);
+    });
   }
 
   create() {
