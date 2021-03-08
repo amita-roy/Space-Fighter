@@ -15,10 +15,14 @@ body {
 }
 
 .left-container {
-  width: 300px;
+  width: 500px;
   padding: 20px 40px;
-  background-image: linear-gradient(to right bottom, #011a39, #003b8371);
+  background-color: rgba(256, 256, 256, 0.9);
   margin-right: 30px;
+  position: absolute;
+  top: 300px;
+  left: 650px;
+  border-radius: 6px;
 }
 
 .playerDetails {
@@ -36,7 +40,7 @@ body {
 
 #playerForm label {
   font-size: 20px;
-  color: #fff;
+  color: #011a39;
 }
 
 #playerForm input[type='text'] {
@@ -65,4 +69,13 @@ body {
   outline: none;
   margin-top: 15px;
   font-size: 18px;
+}
+
+.note {
+  margin-top: 40px;
+  color: #011a39;
+}
+
+.hidden {
+  display: none;
 }

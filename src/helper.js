@@ -19,6 +19,7 @@ const postPlayerScore = (event) => {
   postScores(player, score);
 
   form[0].reset();
+  $('.left-container').addClass('hidden');
 };
 
 $('#playerForm').on('submit', postPlayerScore);

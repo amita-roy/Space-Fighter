@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import $ from 'jquery';
 import BigAlien from '../components/bigEnemy';
 import Laser from '../components/laser';
 import StarAlien from '../components/starAlien';
@@ -274,6 +275,7 @@ class PlayScene extends BaseScene {
       callback: () => {
         this.scene.stop('PlayScene');
         this.scene.start('MenuScene');
+        $('.left-container').removeClass('hidden');
       },
       callbackScope: this,
       loop: false,
