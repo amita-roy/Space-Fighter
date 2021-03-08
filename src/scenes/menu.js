@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import BackgroundScene from './background';
 
 class MenuScene extends BackgroundScene {
@@ -70,6 +71,7 @@ class MenuScene extends BackgroundScene {
       this.sfx.menuStart.stop();
       this.sfx.buttonClick.play();
       if (menuItem.scene) {
+        $('.left-container').addClass('hidden');
         this.scene.start(menuItem.scene);
       }
     });

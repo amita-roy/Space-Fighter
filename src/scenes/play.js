@@ -114,10 +114,12 @@ class PlayScene extends BaseScene {
 
   spawnStarEnemy() {
     this.createStarEnem();
+    this.createStarEnemyCollider();
   }
 
   spawnUfoEnemy() {
     this.createUfo();
+    this.createUfoCollider();
   }
 
   createStarEnem() {
@@ -126,7 +128,7 @@ class PlayScene extends BaseScene {
     const width = Phaser.Math.Between(...details.positionRange);
     this.starEnemy = this.physics.add
       .sprite(width, 0, details.sprite)
-      .setDepth(2)
+      .setDepth(1)
       .setImmovable(true)
       .setOrigin(0.5, 0);
 
@@ -165,7 +167,7 @@ class PlayScene extends BaseScene {
     const width = Phaser.Math.Between(...details.positionRange);
     this.ufo = this.physics.add
       .sprite(width, 0, details.sprite)
-      .setDepth(2)
+      .setDepth(1)
       .setImmovable(true)
       .setOrigin(0.5, 0);
 
