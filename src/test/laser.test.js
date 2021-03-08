@@ -31,7 +31,7 @@ test('Should return the frameRate of laser sprite', () => {
   expect(laser.getDetails().frameRate).toEqual(10);
 });
 
-test('Should return the bodyVelocity for the bigEnemy', () => {
+test('Should return the bodyVelocity for the laser', () => {
   expect(laser.getDetails().bodyVelocity).toBe(50);
 });
 
