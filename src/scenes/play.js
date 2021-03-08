@@ -135,7 +135,7 @@ class PlayScene extends BaseScene {
     this.starEnemy.setVelocityY(details.bodyVelocity);
     this.starEnemy.setBodySize(
       this.starEnemy.width - 30,
-      this.starEnemy.height - 40
+      this.starEnemy.height - 40,
     );
 
     this.starEnemyAnims();
@@ -244,7 +244,7 @@ class PlayScene extends BaseScene {
     this.mainEnemy.setVelocityY(bigEnem.bodyVelocity);
     this.mainEnemy.setBodySize(
       this.mainEnemy.width - 14,
-      this.mainEnemy.height - 34
+      this.mainEnemy.height - 34,
     );
   }
 
@@ -314,7 +314,7 @@ class PlayScene extends BaseScene {
           this.spawnLaser();
         },
         null,
-        this
+        this,
       );
     }
   }
@@ -334,7 +334,7 @@ class PlayScene extends BaseScene {
         this.spawnLaser();
       },
       null,
-      this
+      this,
     );
   }
 
@@ -352,7 +352,7 @@ class PlayScene extends BaseScene {
         this.spawnStarEnemy();
       },
       null,
-      this
+      this,
     );
   }
 
@@ -363,7 +363,7 @@ class PlayScene extends BaseScene {
         this.player,
         this.restartGame,
         null,
-        this
+        this,
       );
     }
 
@@ -373,7 +373,7 @@ class PlayScene extends BaseScene {
         this.player,
         this.restartGame,
         null,
-        this
+        this,
       );
     }
 
@@ -383,7 +383,7 @@ class PlayScene extends BaseScene {
         this.player,
         this.restartGame,
         null,
-        this
+        this,
       );
     }
   }

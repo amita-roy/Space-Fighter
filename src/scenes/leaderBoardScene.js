@@ -45,7 +45,7 @@ class LeaderBoardScene extends BackgroundScene {
             {
               fill: '#000',
               fontSize: '32px',
-            }
+            },
           )
           .setOrigin(0.5)
           .setAlign()

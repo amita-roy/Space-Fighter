@@ -24,7 +24,7 @@ class BackgroundScene extends Phaser.Scene {
     this.starEnemy.setVelocityY(details.bodyVelocity);
     this.starEnemy.setBodySize(
       this.starEnemy.width - 30,
-      this.starEnemy.height - 40
+      this.starEnemy.height - 40,
     );
 
     this.starEnemyAnims();

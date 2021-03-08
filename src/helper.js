@@ -10,9 +10,7 @@ const fetchScores = async () => {
   }
 };
 
-const capitalizeName = (player) => {
-  return player[0].toUpperCase() + player.slice(1).toLowerCase();
-};
+const capitalizeName = (player) => player[0].toUpperCase() + player.slice(1).toLowerCase();
 
 const postPlayerScore = (event) => {
   event.preventDefault();

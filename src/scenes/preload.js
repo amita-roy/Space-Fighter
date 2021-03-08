@@ -85,7 +85,7 @@ class PreloadScene extends Phaser.Scene {
         width / 2 - 150 + 10,
         height / 2 - 30 + 10,
         300 * value,
-        30
+        30,
       );
     });
 
@@ -97,14 +97,14 @@ class PreloadScene extends Phaser.Scene {
     // remove progress bar when complete
     this.load.on(
       'complete',
-      function () {
+      () => {
         progressBar.destroy();
         progressBox.destroy();
         loadingText.destroy();
         percentText.destroy();
         assetText.destroy();
         this.ready();
-      }.bind(this)
+      },
     );
 
     //---------------------------------------
