@@ -84,6 +84,9 @@ class PlayScene extends BaseScene {
   saveBestScore() {
     const bestScoreText = localStorage.getItem('bestScore');
     const bestScore = bestScoreText && parseInt(bestScoreText, 10);
+    const fighterScore = this.score;
+
+    localStorage.setItem('currentScore', fighterScore);
 
     if (!bestScore || this.score > bestScore) {
       localStorage.setItem('bestScore', this.score);

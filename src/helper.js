@@ -14,7 +14,7 @@ const postPlayerScore = (event) => {
   event.preventDefault();
   const form = $(event.target);
   const player = form.serializeArray()[0].value;
-  const score = localStorage.getItem('bestScore');
+  const score = localStorage.getItem('currentScore');
 
   postScores(player, score);
 
