@@ -258,16 +258,15 @@ class PlayScene extends BaseScene {
   }
 
   playerMovement() {
-    if (this.cursors.left.isDown) {
+    if (this.cursors.left.isDown && this.player.x > 50) {
       this.player.setVelocityX(-300);
-    } else if (this.cursors.right.isDown) {
+    } else if (
+      this.cursors.right.isDown
+      && this.player.x < this.config.width - 50
+    ) {
       this.player.setVelocityX(300);
     } else {
       this.player.setVelocityX(0);
-    }
-
-    if (this.cursors.up.isDown && this.player.body.touching.down) {
-      this.player.setVelocityY(-400);
     }
   }
 
@@ -406,9 +405,9 @@ class PlayScene extends BaseScene {
     this.createScore();
 
     this.sfx = {
-      explosions: this.sound.add('misExplosionSound'),
-      laser: this.sound.add('misFireSound'),
-      peCollision: this.sound.add('peCollision'),
+      explosions: this.sound.add('misExplosionSound', { volume: 0.1 }),
+      laser: this.sound.add('misFireSound', { volume: 0.1 }),
+      peCollision: this.sound.add('peCollision', { volume: 0.1 }),
     };
 
     this.cursors = this.input.keyboard.createCursorKeys();
