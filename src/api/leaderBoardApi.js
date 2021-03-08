@@ -5,7 +5,7 @@ const client = axios.create({
     'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/',
 });
 
-const gameID = 'VrAfrXy1FfQWPBusB1V0';
+const gameID = 'OPTiymL4541WfPxmMYzk';
 
 const fetchLeaderBoard = async () => {
   try {
@@ -23,7 +23,5 @@ const postScores = (user, score) => {
     console.log(error);
   }
 };
-
-// nBLiE3xmvt6OEGr5JhHT
 
 export { fetchLeaderBoard, postScores };

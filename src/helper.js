@@ -10,13 +10,17 @@ const fetchScores = async () => {
   }
 };
 
+const capitalizeName = (player) => {
+  return player[0].toUpperCase() + player.slice(1).toLowerCase();
+};
+
 const postPlayerScore = (event) => {
   event.preventDefault();
   const form = $(event.target);
   const player = form.serializeArray()[0].value;
   const score = localStorage.getItem('currentScore');
 
-  postScores(player, score);
+  postScores(capitalizeName(player), score);
 
   form[0].reset();
   $('.left-container').addClass('hidden');
