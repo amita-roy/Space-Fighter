@@ -142,7 +142,7 @@ class PlayScene extends BaseScene {
   }
 
   repeatStarEnemy() {
-    if (this.starEnemy.y > this.config.height / 2) {
+    if (this.starEnemy && this.starEnemy.y > this.config.height / 2) {
       this.createStarEnem();
     }
   }
@@ -178,7 +178,7 @@ class PlayScene extends BaseScene {
   }
 
   repeatUfo() {
-    if (this.ufo.y > this.config.height / 2) {
+    if (this.ufo && this.ufo.y > this.config.height / 2) {
       this.createUfo();
     }
   }
