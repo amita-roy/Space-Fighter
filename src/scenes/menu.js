@@ -29,6 +29,7 @@ class MenuScene extends BackgroundScene {
       .setOrigin(0.5);
 
     this.muteButton.on('pointerdown', () => {
+      this.muteButton.setTint(0x708090);
       this.sfx.menuStart.stop();
       this.isMuted = true;
     });
