@@ -53,7 +53,7 @@
 
 ## Live Demo
 
-[Space-Fighter](https://space-fighter-mauve.vercel.app/)
+[Space-Fighter](https://space-fighter-git-game-royamita.vercel.app)
 
 ### Prerequisites
 
