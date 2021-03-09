@@ -21,8 +21,20 @@ class PlayScene extends BaseScene {
     this.mainHealth = 3;
     this.isMainDead = false;
     this.explosion = null;
-
+    this.isMuted = null;
     this.laser = null;
+  }
+
+  init(isMuted) {
+    this.isMuted = isMuted.mute;
+  }
+
+  createMuteMusic() {
+    if (this.isMuted) {
+      this.sfx.explosions.stop();
+      this.sfx.laser.stop();
+      this.sfx.peCollision.stop();
+    }
   }
 
   explode() {
@@ -224,6 +236,7 @@ class PlayScene extends BaseScene {
   fire() {
     this.laser.setVisible(true).setVelocityY(-400);
     this.sfx.laser.play();
+    this.createMuteMusic();
   }
 
   repeatLaser() {
@@ -395,6 +408,7 @@ class PlayScene extends BaseScene {
 
   handleLaserEvent() {
     this.input.keyboard.on('keydown-SPACE', this.fire, this);
+    this.createMuteMusic();
   }
 
   create() {
@@ -409,6 +423,7 @@ class PlayScene extends BaseScene {
       laser: this.sound.add('misFireSound', { volume: 0.1 }),
       peCollision: this.sound.add('peCollision', { volume: 0.1 }),
     };
+    this.createMuteMusic();
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.anims.create({
@@ -450,6 +465,7 @@ class PlayScene extends BaseScene {
     this.createMainEnemyCollider();
     this.createStarEnemyCollider();
     this.createPlayerCollider();
+    this.createMuteMusic();
   }
 }
 

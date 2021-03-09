@@ -16,6 +16,7 @@ const SHARED_CONFIG = {
   width: WIDTH,
   height: HEIGHT,
   screenCenter: PLAYER_POSITION,
+  isMuted: false,
 };
 
 const scenes = [PreloadScene, MenuScene, ScoreScene, LeaderBoard, PlayScene];

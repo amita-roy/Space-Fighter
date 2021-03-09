@@ -5,6 +5,8 @@ class MenuScene extends BackgroundScene {
   constructor(config) {
     super('MenuScene', config);
     this.screenCenter = [config.width / 2, config.height / 2];
+    this.muteButton = null;
+    this.isMuted = false;
     this.menu = [
       { scene: 'PlayScene', text: 'Play' },
       { scene: 'ScoreScene', text: 'Score' },
@@ -20,14 +22,15 @@ class MenuScene extends BackgroundScene {
   }
 
   createMuteButton() {
-    const muteButton = this.add
+    this.muteButton = this.add
       .image(this.config.width - 70, 100, 'muteButton')
       .setDepth(6)
       .setInteractive()
       .setOrigin(0.5);
 
-    muteButton.on('pointerdown', () => {
+    this.muteButton.on('pointerdown', () => {
       this.sfx.menuStart.stop();
+      this.isMuted = true;
     });
   }
 
@@ -70,6 +73,12 @@ class MenuScene extends BackgroundScene {
       });
       this.sfx.menuStart.stop();
       this.sfx.buttonClick.play();
+
+      if (menuItem.scene === 'PlayScene') {
+        const muted = this.isMuted;
+        this.scene.start(menuItem.scene, { mute: muted });
+      }
+
       if (menuItem.scene) {
         $('.left-container').addClass('hidden');
         this.scene.start(menuItem.scene);
