@@ -99,6 +99,14 @@ To run the tests:
 - Twitter: [@Amita](https://twitter.com/AmitaRoy14)
 - Linkedin: [@Amita](https://www.linkedin.com/in/amita-roy-3b823b68/)
 
+## Thanks
+
+> MillionthVector
+
+- [Blog Link](http://millionthvector.blogspot.com/)
+
+- ![Thanks card](./screenshots/ThanksCard.png)
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
